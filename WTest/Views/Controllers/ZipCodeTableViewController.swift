@@ -52,8 +52,7 @@ class ZipCodeTableViewController: UITableViewController, UISearchBarDelegate {
         spinner.startAnimating()
         tableView.backgroundView = spinner
         tableView.separatorStyle = .none
-        tableView.estimatedRowHeight = 60
-        tableView.rowHeight = UITableView.automaticDimension
+        tableView.tableFooterView = UIView(frame: .zero)
         tableView.register(ZipCodeTableViewCell.self, forCellReuseIdentifier: ZipCodeTableViewCell.reuseIdentifier)
     }
     
@@ -67,9 +66,11 @@ class ZipCodeTableViewController: UITableViewController, UISearchBarDelegate {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
     }
-    
-    // MARK: - Table view data source
-    
+}
+
+// MARK: - Table view data source
+
+extension ZipCodeTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRows(searchActive: searchController.isActive)
     }
@@ -79,7 +80,17 @@ class ZipCodeTableViewController: UITableViewController, UISearchBarDelegate {
         cell.populate(content: viewModel.cellForRowAt(indexPath, searchActive: searchController.isActive))
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 }
+
+// MARK: - UISearch Results Updating
 
 extension ZipCodeTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {

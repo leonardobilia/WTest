@@ -31,7 +31,7 @@ class ZipCpdeViewModel {
     
     func filterZipCodes(text: String) {
         filteredZipcodes = zipcodes.filter {
-            text.isEmpty ? true : $0.zipcode.lowercased().replacingOccurrences(of: "-", with: " ").contains(text.lowercased()) || $0.zipcode.lowercased().contains(text.lowercased()) || $0.designation.lowercased().folding(options: .diacriticInsensitive, locale: .current).contains(text.lowercased())
+            text.isEmpty ? true : $0.zipCode.lowercased().replacingOccurrences(of: "-", with: " ").contains(text.lowercased()) || $0.zipCode.lowercased().contains(text.lowercased()) || $0.designation.lowercased().folding(options: .diacriticInsensitive, locale: .current).contains(text.lowercased())
         }
     }
 }

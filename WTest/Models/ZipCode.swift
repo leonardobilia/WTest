@@ -9,5 +9,5 @@ import Foundation
 
 struct ZipCode: Codable {
     let designation: String
-    let zipcode: String
+    let zipCode: String
 }
