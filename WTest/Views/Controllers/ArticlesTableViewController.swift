@@ -12,6 +12,8 @@ class ArticlesTableViewController: UITableViewController {
     private var spinner = UIActivityIndicatorView()
     private var viewModel = ArticlesViewModel()
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()

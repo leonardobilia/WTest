@@ -11,11 +11,15 @@ class ArticleDetailTableViewController: UITableViewController {
     
     var article: Article.Item!
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupHeader()
     }
+    
+    // MARK: - Methods
     
     func setupHeader() {
         let headerView = StretchyHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 250))

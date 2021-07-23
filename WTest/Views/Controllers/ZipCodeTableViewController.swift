@@ -7,11 +7,15 @@
 
 import UIKit
 
-class ZipCodeTableViewController: UITableViewController, UISearchBarDelegate {
-
+class ZipCodeTableViewController: UITableViewController {
+    
     private var spinner = UIActivityIndicatorView()
     private var viewModel = ZipCpdeViewModel()
     private let searchController = UISearchController()
+    private var selectedZipCode: String = ""
+    
+    var modal = false
+    weak var delegate: UIViewController?
     
     // MARK: - Lifecycle
     
@@ -19,6 +23,7 @@ class ZipCodeTableViewController: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         setupTableView()
         setupSearchController()
+        setupNavigationBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,10 +66,27 @@ class ZipCodeTableViewController: UITableViewController, UISearchBarDelegate {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.returnKeyType = .done
+        searchController.searchBar.placeholder = Constants.ZipCode.searchPlaceholder
         searchController.searchBar.delegate = self
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    private func setupNavigationBar() {
+        if modal {
+            navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.title = Constants.Title.zipCode
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonAction))
+        }
+    }
+    
+    @objc private func doneButtonAction() {
+        
+        if let presenter = delegate as? FormViewController {
+            presenter.selectedZipCode = selectedZipCode
+        }
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -84,9 +106,17 @@ extension ZipCodeTableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+    
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if modal {
+            viewModel.didSelectRowAt(indexPath, searchActive: searchController.isActive) { content in
+                selectedZipCode = "\(content.zipCode) - \(content.designation)"
+            }
+        }
     }
 }
 
@@ -98,6 +128,19 @@ extension ZipCodeTableViewController: UISearchResultsUpdating {
         viewModel.filterZipCodes(text: text)
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
+        }
+    }
+}
+
+// MARK: - UISearchBar Delegate
+
+extension ZipCodeTableViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        if modal {
+            self.dismiss(animated: true) { [weak self] in
+                self?.doneButtonAction()
+            }
         }
     }
 }

@@ -31,6 +31,9 @@
 		8FD8B3C626A9D220004740A5 /* ArticleDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8B3C526A9D220004740A5 /* ArticleDetailTableViewCell.swift */; };
 		8FD8B3C826A9D47D004740A5 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8B3C726A9D47C004740A5 /* UIImageView+Ext.swift */; };
 		8FD8B3CA26A9E5C2004740A5 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8B3C926A9E5C2004740A5 /* String+Ext.swift */; };
+		8FD8B3CE26A9F024004740A5 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8B3CD26A9F024004740A5 /* FormViewController.swift */; };
+		8FD8B3D026A9F776004740A5 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8B3CF26A9F776004740A5 /* TextFieldView.swift */; };
+		8FD8B3D426AAC361004740A5 /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8B3D326AAC361004740A5 /* FormViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,9 @@
 		8FD8B3C526A9D220004740A5 /* ArticleDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailTableViewCell.swift; sourceTree = "<group>"; };
 		8FD8B3C726A9D47C004740A5 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
 		8FD8B3C926A9E5C2004740A5 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		8FD8B3CD26A9F024004740A5 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
+		8FD8B3CF26A9F776004740A5 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
+		8FD8B3D326AAC361004740A5 /* FormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +154,7 @@
 			children = (
 				8F4FEF9426A884B700F1B76F /* ZipCpdeViewModel.swift */,
 				8FD8B3BD26A9A2DB004740A5 /* ArticlesViewModel.swift */,
+				8FD8B3D326AAC361004740A5 /* FormViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -159,6 +166,7 @@
 				8F4FEF9D26A890EB00F1B76F /* ZipCodeTableViewController.swift */,
 				8F4FEFAA26A8E26200F1B76F /* ArticlesTableViewController.swift */,
 				8FD8B3C326A9D033004740A5 /* ArticleDetailTableViewController.swift */,
+				8FD8B3CD26A9F024004740A5 /* FormViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -170,6 +178,7 @@
 				8FD8B3BF26A9A5F4004740A5 /* ArticleTableViewCell.swift */,
 				8FD8B3C526A9D220004740A5 /* ArticleDetailTableViewCell.swift */,
 				8FD8B3C126A9CE3E004740A5 /* StretchyHeaderView.swift */,
+				8FD8B3CF26A9F776004740A5 /* TextFieldView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -262,16 +271,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FD8B3D426AAC361004740A5 /* FormViewModel.swift in Sources */,
 				8F4FEF7626A84B0B00F1B76F /* AppDelegate.swift in Sources */,
 				8FD8B3BC26A9A1C5004740A5 /* Articles.swift in Sources */,
 				8F4FEFA926A8DEF900F1B76F /* TabBarController.swift in Sources */,
 				8F4FEF7826A84B0B00F1B76F /* SceneDelegate.swift in Sources */,
 				8F4FEF9126A8710100F1B76F /* ZipCode.swift in Sources */,
 				8FD8B3BE26A9A2DB004740A5 /* ArticlesViewModel.swift in Sources */,
+				8FD8B3CE26A9F024004740A5 /* FormViewController.swift in Sources */,
 				8FD8B3C826A9D47D004740A5 /* UIImageView+Ext.swift in Sources */,
 				8F4FEFA326A8931900F1B76F /* ZipCodeTableViewCell.swift in Sources */,
 				8F4FEF8C26A86CC400F1B76F /* FileManagerService.swift in Sources */,
 				8F4FEFAB26A8E26200F1B76F /* ArticlesTableViewController.swift in Sources */,
+				8FD8B3D026A9F776004740A5 /* TextFieldView.swift in Sources */,
 				8F4FEF9526A884B700F1B76F /* ZipCpdeViewModel.swift in Sources */,
 				8FD8B3C426A9D033004740A5 /* ArticleDetailTableViewController.swift in Sources */,
 				8FD8B3C026A9A5F4004740A5 /* ArticleTableViewCell.swift in Sources */,

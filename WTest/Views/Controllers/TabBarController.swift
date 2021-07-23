@@ -19,7 +19,8 @@ class TabBarController: UITabBarController {
     private func setupItems() {
         let zipcodeController = setupNavigation(for: ZipCodeTableViewController(), title: Constants.Title.zipCode, icon: UIImage(systemName: "house"))
         let articlesController = setupNavigation(for: ArticlesTableViewController(), title: Constants.Title.articles, icon: UIImage(systemName: "book"))
-        viewControllers = [zipcodeController, articlesController]
+        let formController = setupNavigation(for: FormViewController(), title: Constants.Title.form, icon: UIImage(systemName: "highlighter"))
+        viewControllers = [zipcodeController, articlesController, formController]
     }
     
     private func setupNavigation(for rootController: UIViewController, title: String, icon: UIImage?) -> UIViewController {

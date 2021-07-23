@@ -29,6 +29,14 @@ class ZipCpdeViewModel {
         }
     }
     
+    func didSelectRowAt(_ indexPath: IndexPath, searchActive: Bool, completion: (ZipCode) -> ()) {
+        if searchActive && filteredZipcodes.indices.contains(indexPath.row) {
+            completion(filteredZipcodes[indexPath.row])
+        } else {
+            completion(zipcodes[indexPath.row])
+        }
+    }
+    
     func filterZipCodes(text: String) {
         filteredZipcodes = zipcodes.filter {
             text.isEmpty ? true : $0.zipCode.lowercased().replacingOccurrences(of: "-", with: " ").contains(text.lowercased()) || $0.zipCode.lowercased().contains(text.lowercased()) || $0.designation.lowercased().folding(options: .diacriticInsensitive, locale: .current).contains(text.lowercased())
