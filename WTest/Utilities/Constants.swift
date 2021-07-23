@@ -18,6 +18,10 @@ struct Constants {
         static let searchPlaceholder = "Buscar"
     }
     
+    struct Article {
+        static let commentsHeaderTitle = "Comentários"
+    }
+    
     struct Form {
         static let buttonTitle = "Validar"
         static let freeFieldPlaceholder = "Texto Livre"

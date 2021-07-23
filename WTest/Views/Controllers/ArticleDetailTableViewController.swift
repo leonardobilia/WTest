@@ -9,6 +9,8 @@ import UIKit
 
 class ArticleDetailTableViewController: UITableViewController {
     
+    private lazy var spinner = UIActivityIndicatorView()
+    private lazy var viewModel = ArticleDetailViewModel()
     var article: Article.Item!
     
     // MARK: - Lifecycle
@@ -17,11 +19,12 @@ class ArticleDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         setupTableView()
         setupHeader()
+        setupViewModel()
     }
     
     // MARK: - Methods
     
-    func setupHeader() {
+    private func setupHeader() {
         let headerView = StretchyHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 250))
         if let hero = article.hero, let url = URL(string: hero) {
             headerView.imageView.load(url: url)
@@ -30,9 +33,32 @@ class ArticleDetailTableViewController: UITableViewController {
     }
     
     private func setupTableView() {
+        spinner.startAnimating()
+        tableView.backgroundView = spinner
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.register(ArticleDetailTableViewCell.self, forCellReuseIdentifier: ArticleDetailTableViewCell.reuseIdentifier)
+        tableView.register(CommentsTableViewCell.self, forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier)
+    }
+
+    private func setupViewModel() {
+        viewModel.fetchComments(id: article.id) {
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+            }
+        }
+        
+        viewModel.loading.valueChanged = { [weak self] value in
+            value ? self?.spinner.startAnimating() : self?.spinner.stopAnimating()
+        }
+        
+        viewModel.alert.valueChanged = { [weak self] message in
+            if let message = message {
+                let alert = UIAlertController(title: Constants.AlertTitle.oops, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: Constants.AlertAction.ok, style: .default, handler: nil))
+                self?.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 }
 
@@ -40,15 +66,42 @@ class ArticleDetailTableViewController: UITableViewController {
 
 extension ArticleDetailTableViewController {
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSections()
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return viewModel.numberOfRows(section)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ArticleDetailTableViewCell.reuseIdentifier, for: indexPath) as! ArticleDetailTableViewCell
-        cell.populate(content: article)
-        cell.selectionStyle = .none
-        return cell
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ArticleDetailTableViewCell.reuseIdentifier, for: indexPath) as! ArticleDetailTableViewCell
+            cell.populate(content: article)
+            cell.selectionStyle = .none
+            return cell
+            
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.reuseIdentifier, for: indexPath) as! CommentsTableViewCell
+            cell.populate(content: viewModel.cellForRowAt(indexPath))
+            cell.selectionStyle = .none
+            return cell
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        viewModel.willDisplayCellAt(indexPath) { [unowned self] in
+            self.viewModel.fetchComments(id: self.article.id) {
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.titleForHeader(in: section)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

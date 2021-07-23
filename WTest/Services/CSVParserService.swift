@@ -10,8 +10,8 @@ import Foundation
 struct CSVParserService {
     static var shared = CSVParserService()
     
-    func parseCSVFrom(endpoint: EndPoint, completion: @escaping (Result<[NSDictionary], Error>) -> Void) {
-        guard let url = URL(string: endpoint.rawValue) else { return }
+    func parseCSVFrom(endpoint: Endpoint, completion: @escaping (Result<[NSDictionary], Error>) -> Void) {
+        guard let url = endpoint.url else { return }
         
         do {
             let content = try String(contentsOf: url)

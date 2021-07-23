@@ -1,15 +1,15 @@
 //
-//  ArticlesViewModel.swift
+//  ArticleDetailViewModel.swift
 //  WTest
 //
-//  Created by Leonardo Bilia on 22/07/21.
+//  Created by Leonardo Bilia on 23/07/21.
 //
 
 import Foundation
 
-class ArticlesViewModel {
+class ArticleDetailViewModel {
     
-    private var articles: [Article.Item] = []
+    private var comments: [Comment] = []
     private let networkService: NetworkServiceProtocol
     private var fetchMoreData = false
     private var currentPage = 1
@@ -25,48 +25,52 @@ class ArticlesViewModel {
     
     // MARK: - Methods
     
-    func numberOfRows() -> Int {
-        return articles.count
+    func numberOfSections() -> Int {
+        return 2
     }
     
-    func cellForRowAt(_ indexPath: IndexPath) -> Article.Item {
-        return articles[indexPath.row]
+    func numberOfRows(_ section: Int) -> Int {
+        switch section {
+        case 1:
+            return comments.count
+        default:
+            return 1
+        }
+    }
+
+    func cellForRowAt(_ indexPath: IndexPath) -> Comment {
+        return comments[indexPath.row]
+    }
+    
+    func titleForHeader(in section: Int) -> String {
+        if section == 1 {
+            #if SECONDARY
+            return Constants.Article.commentsHeaderTitle
+            #endif
+        }
+        return ""
     }
     
     func willDisplayCellAt(_ indexPath: IndexPath, completion: @escaping () -> ()) {
-        if indexPath.row == articles.count - 1 && fetchMoreData {
+        if indexPath.row == comments.count - 1 && fetchMoreData {
             currentPage += 1
             completion()
         }
-    }
-    
-    func didSelectRowAt(_ indexPath: IndexPath, completion: (Article.Item) -> ()) {
-        completion(articles[indexPath.row])
     }
 }
 
 // MARK: - Network
 
-extension ArticlesViewModel {
-    #if PRIMARY
-    typealias DataModel = Article
-    #else
-    typealias DataModel = Article.Item
-    #endif
-    
-    func fetchArticles(completion: @escaping () -> Void) {
+extension ArticleDetailViewModel {
+    func fetchComments(id: String, completion: @escaping () -> Void) {
+        #if SECONDARY
         loading.value = true
-        networkService.fetch(.articles(limit: 10, page: currentPage), type: DataModel.self) { [weak self] result in
+        networkService.fetch(.comments(id: id, limit: 15, page: currentPage), type: Comment.self) { [weak self] result in
             switch result {
             case .success(let response):
                 DispatchQueue.main.async {
-                    #if PRIMARY
-                    response.items.forEach({ self?.articles.append($0) })
-                    self?.fetchMoreData = response.items.count != 0
-                    #else
-                    response.forEach({ self?.articles.append($0) })
+                    response.forEach({ self?.comments.append($0) })
                     self?.fetchMoreData = response.count != 0
-                    #endif
                     self?.loading.value = false
                     completion()
                 }
@@ -75,5 +79,7 @@ extension ArticlesViewModel {
                 self?.alert.value = error.localizedDescription
             }
         }
+        #endif
     }
 }
+

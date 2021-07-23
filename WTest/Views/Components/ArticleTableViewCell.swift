@@ -12,14 +12,23 @@ class ArticleTableViewCell: UITableViewCell {
     private lazy var titlelabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .darkGray
         label.font = .boldSystemFont(ofSize: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var publishedAtLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.textAlignment = .right
+        label.font = .systemFont(ofSize: 14)
         return label
     }()
     
@@ -28,6 +37,14 @@ class ArticleTableViewCell: UITableViewCell {
         label.textColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillProportionally
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     //MARK: - Inits
@@ -46,6 +63,7 @@ class ArticleTableViewCell: UITableViewCell {
     func populate(content: Article.Item) {
         titlelabel.text = content.title
         authorLabel.text = content.author
+        publishedAtLabel.text = content.publishedAt.dateFormatter()
         
         if let summary = content.summary {
             summaryLabel.text = summary
@@ -63,17 +81,22 @@ extension ArticleTableViewCell {
     
     private func setupUI() {
         contentView.addSubview(titlelabel)
-        contentView.addSubview(authorLabel)
         contentView.addSubview(summaryLabel)
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(authorLabel)
+        
+        #if SECONDARY
+        stackView.addArrangedSubview(publishedAtLabel)
+        #endif
         
         NSLayoutConstraint.activate([
             titlelabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             titlelabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             titlelabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            authorLabel.topAnchor.constraint(equalTo: titlelabel.bottomAnchor, constant: 4),
-            authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            stackView.topAnchor.constraint(equalTo: titlelabel.bottomAnchor, constant: 4),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
         
             summaryLabel.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 8),
             summaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),

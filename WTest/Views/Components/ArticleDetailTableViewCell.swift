@@ -9,6 +9,16 @@ import UIKit
 
 class ArticleDetailTableViewCell: UITableViewCell {
 
+    private lazy var avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 30
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .lightGray
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     private lazy var titlelabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -19,6 +29,7 @@ class ArticleDetailTableViewCell: UITableViewCell {
     
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .darkGray
         label.font = .boldSystemFont(ofSize: 14)
         return label
     }()
@@ -39,7 +50,7 @@ class ArticleDetailTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -66,6 +77,15 @@ class ArticleDetailTableViewCell: UITableViewCell {
         authorLabel.text = content.author
         publishedAtLabel.text = content.publishedAt.dateFormatter()
         bodyLabel.text = content.body
+        
+        // NOTE:
+        // Avatar not loading due to access restriction to the provided URL.
+        // Server Response: to this object has been disabled
+        // I have used a color background to represent the rounded image.
+
+        if let avatar = content.avatar {
+            avatarImageView.load(url: URL(string: avatar)!)
+        }
     }
 }
 
@@ -80,19 +100,29 @@ extension ArticleDetailTableViewCell {
         stackView.addArrangedSubview(authorLabel)
         stackView.addArrangedSubview(publishedAtLabel)
 
-        NSLayoutConstraint.activate([
-            titlelabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 32),
-            titlelabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titlelabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            
-            stackView.topAnchor.constraint(equalTo: titlelabel.bottomAnchor, constant: 4),
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-
-            bodyLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
-            bodyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            bodyLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            bodyLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -48)
-        ])
+        #if SECONDARY
+        contentView.addSubview(avatarImageView)
+        avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 32).isActive = true
+        avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+        avatarImageView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        avatarImageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        titlelabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8).isActive = true
+        #else
+        titlelabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+        #endif
+        
+        titlelabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 32).isActive = true
+        titlelabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+        
+        stackView.topAnchor.constraint(equalTo: titlelabel.bottomAnchor, constant: 4).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+        
+        bodyLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16).isActive = true
+        bodyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+        bodyLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+        bodyLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -48).isActive = true
     }
 }
