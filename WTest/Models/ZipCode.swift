@@ -7,7 +7,12 @@
 
 import Foundation
 
+//struct ZipCode: Codable {
+//    let designation: String
+//    let zipCode: String
+//}
+
+
 struct ZipCode: Codable {
-    let designation: String
-    let zipCode: String
+    let info: String
 }

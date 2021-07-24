@@ -116,7 +116,7 @@ extension ZipCodeTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if modal {
             viewModel.didSelectRowAt(indexPath, searchActive: searchController.isActive) { content in
-                selectedZipCode = "\(content.zipCode) - \(content.designation)"
+                selectedZipCode = "\(content.info)"
             }
         }
     }

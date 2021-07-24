@@ -27,7 +27,7 @@ struct CSVParserService {
                 if let designation = item.value(forKey: "desig_postal") as? String,
                 let zipcode = item.value(forKey: "num_cod_postal") as? String,
                 let extraCode = item.value(forKey: "ext_cod_postal") as? String {
-                    result.append(NSDictionary(dictionary: ["zipCode" : "\(zipcode)-\(extraCode)", "designation": designation.capitalized]))
+                    result.append(NSDictionary(dictionary: ["info" : "\(zipcode)-\(extraCode)  \(designation.capitalized)"]))
                 }
             }
             completion(.success(result))

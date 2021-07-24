@@ -25,7 +25,7 @@ extension Endpoint {
     var url: URL? {
         switch self {
         case .zipcodes:
-            return URL(string: "https://api.myapp.com/")
+            return URL(string: "https://raw.githubusercontent.com/centraldedados/codigos_postais/master/data/codigos_postais.csv")
     
         case .secondaryArticles(let limit, let page):
             return URL(string: "https://5badefb9a65be000146763a4.mockapi.io/mobile/1-0/articles?limit=\(limit)&page=\(page)")

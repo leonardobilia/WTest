@@ -10,7 +10,7 @@ import Foundation
 final class ZipCpdeViewModel {
 
     private lazy var zipcodes: [ZipCode] = []
-    private lazy var filteredZipcodes: [ZipCode] = []
+    private lazy var searchResults: [ZipCode] = []
     
     var loading: Bindable<Bool> = Bindable(false)
     var alert: Bindable<String?> = Bindable(nil)
@@ -21,7 +21,7 @@ final class ZipCpdeViewModel {
     /// - Parameter searchActive: It checks if the search bar is active or not.
     /// - Returns: Number of rows
     func numberOfRows(searchActive: Bool) -> Int {
-        return searchActive ? filteredZipcodes.count : zipcodes.count
+        return searchActive ? searchResults.count : zipcodes.count
     }
     
     /// Cell for row at index path
@@ -30,8 +30,8 @@ final class ZipCpdeViewModel {
     ///   - searchActive: It checks if the search bar is active
     /// - Returns: A ZipCode object rather comes from the filtered or the main array.
     func cellForRowAt(_ indexPath: IndexPath, searchActive: Bool) -> ZipCode {
-        if searchActive && filteredZipcodes.indices.contains(indexPath.row) {
-            return filteredZipcodes[indexPath.row]
+        if searchActive && searchResults.indices.contains(indexPath.row) {
+            return searchResults[indexPath.row]
         } else {
             return zipcodes[indexPath.row]
         }
@@ -43,8 +43,8 @@ final class ZipCpdeViewModel {
     ///   - searchActive: it checks if the search bar is active.
     ///   - completion: Returns the selected object.
     func didSelectRowAt(_ indexPath: IndexPath, searchActive: Bool, completion: (ZipCode) -> ()) {
-        if searchActive && filteredZipcodes.indices.contains(indexPath.row) {
-            completion(filteredZipcodes[indexPath.row])
+        if searchActive && searchResults.indices.contains(indexPath.row) {
+            completion(searchResults[indexPath.row])
         } else {
             completion(zipcodes[indexPath.row])
         }
@@ -53,8 +53,11 @@ final class ZipCpdeViewModel {
     /// Filters all the postal codes
     /// - Parameter text: Searcheable text
     func filterZipCodes(text: String) {
-        filteredZipcodes = zipcodes.filter {
-            text.isEmpty ? true : $0.zipCode.lowercased().replacingOccurrences(of: "-", with: " ").contains(text.lowercased()) || $0.zipCode.lowercased().contains(text.lowercased()) || $0.designation.lowercased().folding(options: .diacriticInsensitive, locale: .current).contains(text.lowercased())
+        let searchable = text.lowercased().components(separatedBy: " ")
+        searchResults = zipcodes.filter { content in
+            let selection = content.info.lowercased().folding(options: .diacriticInsensitive, locale: .current)
+            let result = searchable.filter { text.isEmpty ? true : selection.contains($0) }
+            return !result.isEmpty
         }
     }
 }

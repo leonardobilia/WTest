@@ -9,17 +9,8 @@ import UIKit
 
 class ZipCodeTableViewCell: UITableViewCell {
 
-    private lazy var zipCodeLabel = UILabel()
-    private lazy var designationLabel = UILabel()
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
+    private lazy var infoLabel = UILabel()
+
     //MARK: - Inits
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -34,8 +25,14 @@ class ZipCodeTableViewCell: UITableViewCell {
     //MARK: - Methods
     
     func populate(content: ZipCode) {
-        zipCodeLabel.text = content.zipCode
-        designationLabel.text = content.designation
+        infoLabel.attributedText = attributed(text: content.info)
+    }
+    
+    private func attributed(text: String) -> NSAttributedString? {
+        let attributedQuote = NSMutableAttributedString(string: text)
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: infoLabel.font.pointSize)]
+        attributedQuote.addAttributes(attributes, range: NSRange(location: 0, length: 8))
+        return attributedQuote
     }
 }
 
@@ -44,18 +41,14 @@ class ZipCodeTableViewCell: UITableViewCell {
 extension ZipCodeTableViewCell {
     
     private func setupUI() {
-        contentView.addSubview(stackView)
-        stackView.addArrangedSubview(zipCodeLabel)
-        stackView.addArrangedSubview(designationLabel)
-
-        zipCodeLabel.font = .boldSystemFont(ofSize: zipCodeLabel.font.pointSize)
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(infoLabel)
 
         NSLayoutConstraint.activate([
-            zipCodeLabel.widthAnchor.constraint(equalToConstant: 98),
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            infoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            infoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            infoLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            infoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
 }
