@@ -82,6 +82,7 @@ class FormViewController: UIViewController {
         numbersTextField.translatesAutoresizingMaskIntoConstraints = false
         numbersTextField.placeholder = Constants.Form.numbersFieldPlaceholder
         numbersTextField.style = .regular
+        numbersTextField.keyboardType = .numberPad
         numbersTextField.completion = { [weak self] in
             self?.validateFields()
         }
