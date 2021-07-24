@@ -10,11 +10,11 @@ import UIKit
 
 class StretchyHeaderView: UIView {
     
-    private var containerViewHeight = NSLayoutConstraint()
-    private var imageViewHeight = NSLayoutConstraint()
-    private var imageViewBottom = NSLayoutConstraint()
+    private lazy var containerViewHeight = NSLayoutConstraint()
+    private lazy var imageViewHeight = NSLayoutConstraint()
+    private lazy var imageViewBottom = NSLayoutConstraint()
     
-    private var containerView: UIView = {
+    private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -63,13 +63,11 @@ extension StretchyHeaderView {
             self.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             self.heightAnchor.constraint(equalTo: containerView.heightAnchor)
         ])
-        
-        // Container View Constraints
+
         containerView.widthAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
         containerViewHeight = containerView.heightAnchor.constraint(equalTo: self.heightAnchor)
         containerViewHeight.isActive = true
-        
-        // ImageView Constraints
+
         imageViewBottom = imageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         imageViewBottom.isActive = true
         

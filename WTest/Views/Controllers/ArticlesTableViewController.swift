@@ -9,34 +9,37 @@ import UIKit
 
 class ArticlesTableViewController: UITableViewController {
     
-    private var spinner = UIActivityIndicatorView()
-    private var viewModel = ArticlesViewModel()
+    private lazy var spinner = UIActivityIndicatorView()
+    private lazy var viewModel = ArticlesViewModel()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        setupViewModel()
+        observableContent()
+        fetchData()
     }
     
     // MARK: - Methods
     
-    private func setupViewModel() {
+    private func fetchData() {
         viewModel.fetchArticles {
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.reloadData()
             }
         }
-        
+    }
+    
+    private func observableContent() {
         viewModel.loading.valueChanged = { [weak self] value in
             value ? self?.spinner.startAnimating() : self?.spinner.stopAnimating()
         }
         
         viewModel.alert.valueChanged = { [weak self] message in
             if let message = message {
-                let alert = UIAlertController(title: Constants.AlertTitle.oops, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: Constants.AlertAction.ok, style: .default, handler: nil))
+                let alert = UIAlertController(title: Constants.Alert.Title.oops, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: Constants.Alert.Action.ok, style: .default, handler: nil))
                 self?.present(alert, animated: true, completion: nil)
             }
         }
@@ -75,11 +78,7 @@ extension ArticlesTableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         viewModel.willDisplayCellAt(indexPath) { [weak self] in
-            self?.viewModel.fetchArticles {
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-            }
+            self?.fetchData()
         }
     }
     

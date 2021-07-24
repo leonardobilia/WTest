@@ -10,6 +10,10 @@ import Foundation
 struct CSVParserService {
     static var shared = CSVParserService()
     
+    /// Reads and map the CSV file from the server.
+    /// - Parameters:
+    ///   - endpoint: All the available URLs come from the enum Endpoint.
+    ///   - completion: It sends the CSV converted to an NSDictionary or the error at the end of the process.
     func parseCSVFrom(endpoint: Endpoint, completion: @escaping (Result<[NSDictionary], Error>) -> Void) {
         guard let url = endpoint.url else { return }
         
@@ -33,6 +37,9 @@ struct CSVParserService {
         }
     }
     
+    /// It converts the CSV content to an NSDictionary.
+    /// - Parameter content: A string representing the CSV content.
+    /// - Returns: An array of NSDictionary.
     private func JSONFromCSV(content: String) -> [NSDictionary] {
         let lines = content.components(separatedBy: "\n")
         let columns = lines[0].components(separatedBy: ",")

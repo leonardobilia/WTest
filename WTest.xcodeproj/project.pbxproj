@@ -77,7 +77,7 @@
 		8F4FEF7726A84B0B00F1B76F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8F4FEF7E26A84B0C00F1B76F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F4FEF8126A84B0C00F1B76F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8F4FEF8326A84B0C00F1B76F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F4FEF8326A84B0C00F1B76F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = WTest/Info.plist; sourceTree = SOURCE_ROOT; };
 		8F4FEF8B26A86CC400F1B76F /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		8F4FEF9026A8710100F1B76F /* ZipCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipCode.swift; sourceTree = "<group>"; };
 		8F4FEF9226A87A7800F1B76F /* CSVParserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVParserService.swift; sourceTree = "<group>"; };
@@ -91,7 +91,6 @@
 		8F4FEFA826A8DEF900F1B76F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8F4FEFAA26A8E26200F1B76F /* ArticlesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesTableViewController.swift; sourceTree = "<group>"; };
 		8F56400826AB2147008FA698 /* WTest-Secondary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WTest-Secondary.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F56400926AB2148008FA698 /* WTest-Secondary-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "WTest-Secondary-Info.plist"; path = "/Users/leonardobilia/Projects/Take Home/WTest/WTest-Secondary-Info.plist"; sourceTree = "<absolute>"; };
 		8F56400A26AB250D008FA698 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		8F56400D26AB3B95008FA698 /* ArticleDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailViewModel.swift; sourceTree = "<group>"; };
 		8F56401026AB3C08008FA698 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -107,6 +106,7 @@
 		8FD8B3CD26A9F024004740A5 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		8FD8B3CF26A9F776004740A5 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 		8FD8B3D326AAC361004740A5 /* FormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
+		8FDBC2AA26AB488A00967796 /* WTest-Secondary-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "WTest-Secondary-Info.plist"; path = "WTest/WTest-Secondary-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +132,6 @@
 			children = (
 				8F4FEF7426A84B0B00F1B76F /* WTest */,
 				8F4FEF7326A84B0B00F1B76F /* Products */,
-				8F56400926AB2148008FA698 /* WTest-Secondary-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -158,6 +157,7 @@
 				8F4FEF7E26A84B0C00F1B76F /* Assets.xcassets */,
 				8F4FEF8026A84B0C00F1B76F /* LaunchScreen.storyboard */,
 				8F4FEF8326A84B0C00F1B76F /* Info.plist */,
+				8FDBC2AA26AB488A00967796 /* WTest-Secondary-Info.plist */,
 			);
 			path = WTest;
 			sourceTree = "<group>";
@@ -597,7 +597,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C8CWPZXDG8;
-				INFOPLIST_FILE = "WTest-Secondary-Info.plist";
+				INFOPLIST_FILE = "WTest/WTest-Secondary-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -617,7 +617,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C8CWPZXDG8;
-				INFOPLIST_FILE = "WTest-Secondary-Info.plist";
+				INFOPLIST_FILE = "WTest/WTest-Secondary-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

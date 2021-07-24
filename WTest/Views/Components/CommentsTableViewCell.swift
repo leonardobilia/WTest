@@ -69,8 +69,8 @@ class CommentsTableViewCell: UITableViewCell {
         
         // NOTE:
         // Avatar not loading due to access restriction to the provided URL.
-        // Server Response: to this object has been disabled
-        // I have used a color background to represent the rounded image.
+        // Server Response: this object has been disabled
+        // I have applied a color background to make the rounded image visible.
         avatarImageView.load(url: URL(string: content.avatar)!)
     }
 }

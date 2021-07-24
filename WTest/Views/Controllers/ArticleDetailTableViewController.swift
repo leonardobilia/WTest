@@ -19,7 +19,8 @@ class ArticleDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         setupTableView()
         setupHeader()
-        setupViewModel()
+        observableContent()
+        fetchData()
     }
     
     // MARK: - Methods
@@ -41,21 +42,23 @@ class ArticleDetailTableViewController: UITableViewController {
         tableView.register(CommentsTableViewCell.self, forCellReuseIdentifier: CommentsTableViewCell.reuseIdentifier)
     }
 
-    private func setupViewModel() {
-        viewModel.fetchComments(id: article.id) {
-            DispatchQueue.main.async { [weak self] in
+    private func fetchData() {
+        viewModel.fetchComments(id: article.id) { [weak self] in
+            DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
         }
-        
+    }
+    
+    private func observableContent() {
         viewModel.loading.valueChanged = { [weak self] value in
             value ? self?.spinner.startAnimating() : self?.spinner.stopAnimating()
         }
         
         viewModel.alert.valueChanged = { [weak self] message in
             if let message = message {
-                let alert = UIAlertController(title: Constants.AlertTitle.oops, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: Constants.AlertAction.ok, style: .default, handler: nil))
+                let alert = UIAlertController(title: Constants.Alert.Title.oops, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: Constants.Alert.Action.ok, style: .default, handler: nil))
                 self?.present(alert, animated: true, completion: nil)
             }
         }
@@ -91,12 +94,8 @@ extension ArticleDetailTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        viewModel.willDisplayCellAt(indexPath) { [unowned self] in
-            self.viewModel.fetchComments(id: self.article.id) {
-                DispatchQueue.main.async { [weak self] in
-                    self?.tableView.reloadData()
-                }
-            }
+        viewModel.willDisplayCellAt(indexPath) { [weak self] in
+            self?.fetchData()
         }
     }
     

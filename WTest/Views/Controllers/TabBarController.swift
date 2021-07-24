@@ -8,9 +8,7 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-    
-    private var previousController: UIViewController?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupItems()

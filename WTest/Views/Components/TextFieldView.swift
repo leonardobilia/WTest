@@ -7,6 +7,9 @@
 
 import UIKit
 
+// Created this class to avoid the duplication of several text fields components.
+// It also handles changes on the text fields base on the user's actions and inputs.
+
 class TextFieldView: UIView {
     
     enum TextFieldStyle {

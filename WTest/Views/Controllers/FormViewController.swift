@@ -149,8 +149,8 @@ class FormViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func validateButtonAction() {
-        let alert = UIAlertController(title: Constants.AlertTitle.awesome, message: Constants.AlertMessage.formValidated, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: Constants.AlertAction.ok, style: .default, handler: nil))
+        let alert = UIAlertController(title: Constants.Alert.Title.awesome, message: Constants.Alert.Message.formValidated, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Constants.Alert.Action.ok, style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

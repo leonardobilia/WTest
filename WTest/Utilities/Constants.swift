@@ -7,6 +7,9 @@
 
 import Foundation
 
+// The structure was created to manage all app constants and to facilitate localization in the future.
+// Each inner structure represents a functionality or feature of the app.
+
 struct Constants {
     struct Title {
         static let zipCode = "Códigos Postais"
@@ -33,16 +36,18 @@ struct Constants {
         static let zipCodeFieldPlaceholder = "Designicação Postal"
     }
     
-    struct AlertTitle {
-        static let oops = "Oops!"
-        static let awesome = "Uhuuu!"
-    }
-    
-    struct AlertMessage {
-        static let formValidated = "Todos os campos foram validados com sucesso."
-    }
-    
-    struct AlertAction {
-        static let ok = "Ok"
+    struct Alert {
+        struct Title {
+            static let oops = "Oops!"
+            static let awesome = "Uhuuu!"
+        }
+        
+        struct Message {
+            static let formValidated = "Todos os campos foram validados com sucesso."
+        }
+        
+        struct Action {
+            static let ok = "Ok"
+        }
     }
 }

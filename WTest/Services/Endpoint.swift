@@ -7,6 +7,8 @@
 
 import Foundation
 
+// The Enum has been created to manage all the app's endpoints
+
 enum Endpoint {
     case zipcodes
     case secondaryArticles(limit: Int, page: Int)
